@@ -1,0 +1,1010 @@
+<!---------------------------------------------------------------------
+ * Description: Graduation Project
+ * Project: Communication interface between WebServer and ESP32
+ * Author: Tran Doan Manh
+ --------------------------------------------------------------------->
+
+    <!-- To define the "html" version is used - using HTML5 -->
+<!DOCTYPE html>
+    <!-- To declare the language of the Web page - lang="en"/English -->
+<html lang="en">
+
+    <!------------ To declare the information of WebServer such as title, character encoding table, links, scripts... ----------->
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebServer ESP32-Zigbee</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css'  rel='stylesheet'>
+</head>
+
+    <!------------------------------ To create CSS for WebServer -------------------------------->
+<style>
+    /* To configure common for all elements of HTML */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+        /*--------------- To configure the "sidebar" section ---------------*/
+    /*----- To configure common for the "sidebar" section -----*/
+    .sidebar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 265px;
+        background: #528B8B;
+        padding: 0.5rem 0.5rem;
+        transition: all 0.1s linear;
+    }
+
+    /*----- To configure the "logo" class -----*/
+    /* To configure common the "logo" class */
+    .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        margin-bottom: .75rem;
+        padding: 0.5rem, 0.5rem;
+        height: 30px;
+        width: 100%;
+    }
+    /* To configure the "logo-icon" class */
+    .logo-icon {
+        margin-top: 15px;
+        margin-right: .75rem;
+        width: 30px;
+        height: 30px;
+        color: #EDEDED; 
+    }
+    /* To configure the "logo-text" class */
+    .logo-text {
+        margin-top: 15px;
+        font-size: 1.75rem;
+        color: #EDEDED; 
+        font-weight: 2000;
+    }
+
+    /*----- To configure the "user" class -----*/
+    /* To configure common the "user" class */
+    .user {
+        display: flex;
+        align-items: center;
+        margin: .75rem 0;
+    }
+    /* To configure the "user-img" class */
+    .user-img {
+        margin-left: 8px;
+        margin-top: 10px;
+        width: 30px;
+        border-radius: 100%;
+        border: 1px solid #eee;
+    }
+    /* To configure the "user-text" class */
+    .user-text {
+        margin-top: 12px;
+        font-size: 1rem;
+    }
+    .user p {
+        color: #EDEDED;
+        margin-left: 15px;
+    }
+
+    /*----- To configure the "control function" bar -----*/
+    /* To configure common the "control function" bar */
+    .sidebar ul li {
+        position: relative;
+        top: 10px;
+        list-style-type: none;
+        height: 30px;
+        width: 95%;
+        margin: 0.8rem auto;
+    }
+    /* To configure the "a" card */
+    .sidebar ul li a {
+        color: #EDEDED;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    /* To configure the "i" card */
+    .sidebar ul li a i {
+        min-width: 50px;
+        text-align: center;
+        line-height: 50px;
+    }
+    /* To configure the "btn-icon" class */
+    .btn-icon {
+        font-size: 1.5rem;
+    }
+    /* To configure the "conversion" class */
+    .conversion {
+        font-size: 1rem;
+        background-color: #528B8B;
+        color: #EDEDED;
+        padding: 0.5rem 0.5rem;
+        border-style: none;
+        border-radius: 20px;
+        transition-duration: 0.1s;
+    }
+    .conversion:hover {
+        color: #FFE4B5;
+        border-style: solid;
+        border-color: #FFE4B5;
+    }
+    /* To configure common the "logout" class */
+    .logout {
+        margin-top: 310px;
+    }
+    /* To configure the "logout-icon" class */
+    .logout-icon {
+        font-size: 1.5rem;
+    }
+    /* To configure the "logout-text" class */
+    .logout-text {
+        font-size: 1.2rem;
+        font-weight: 2000;
+    }
+
+        /*--------------- To configure the "control interface" section ---------------*/
+    /* To configure common for the "control interface" section */
+    .control_interface {
+        position: relative;
+        left: 265px;
+        height: 100vh;
+        width: 1101px;
+        background: url('https://img.freepik.com/premium-photo/great-picture-everything-you-with-it-will-be-lively_987032-77079.jpg?w=740') no-repeat;
+        background-size: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /*----- To configure the "Project information" function -----*/
+    /* To configure common the "Project information" function */
+    #information {
+        background-color: #EDEDED;
+        height: 100vh;
+        width: 1101px;
+        padding: 1rem 1rem;
+    }
+    /* To configure the "inf" class */
+    .inf {
+        color: #528B8B;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.75rem;
+        font-weight: 500;
+    }
+
+    /*----- To configure the "Zigbee Network" function -----*/
+    /* To configure common the "Zigbee Network" function */
+    #network {
+        width: 430px;
+        height: 480px;
+        background: none;
+        border: 2px solid rgba(255, 255, 255, 0.8);
+        box-shadow: 0 0 10px 2px rgb(255, 255, 255, 0.8);
+        color: #fff;
+        border-radius: 20px;
+    }
+
+    /* To configure common the ", Create, Open and Stop openning the Network" function */
+    #create-title{
+        margin-top: 35px;
+        margin-left: 15px;
+        height: 40px;
+        width: 100%;
+        display: flex;
+        align-items: center; 
+    }
+    #open-title {
+        margin-top: 20px;
+        margin-left: 15px;
+        height: 40px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+    #stop-title {
+        margin-top: 20px;
+        margin-left: 15px;
+        height: 40px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+    .btn-network {
+        height: 40px;
+        width: 80px;
+        border-radius: 20px;
+        border-style: solid;
+    }
+    .stop-openning {
+        margin-right: 20px;
+        border-color: #FFFFFF;
+        background-color: #FFFFFF;
+        color: #000000;
+    }
+    .stop-openning:hover {
+        border-color: #FFD700;
+        background-color: #FFD700;
+        color: #000000;
+    }
+
+    /* To configure common the "Leave the Zigbee network" function */
+    #clear-title {
+        margin-top: 20px;
+        margin-left: 15px;
+        height: 40px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+    .btn-all {
+        margin-right: 20px;
+        margin-left: 20px;
+        border-color: #FF0000;
+        background-color: #FF0000;
+        color: #FFFFFF;
+    }
+    .btn-all:hover {
+        border-color: #FFCC00;
+        background-color: #FFCC00;
+        color: #000000;
+    }
+    .btn-upper {
+        margin-right: 20px;
+        border-color: #000000;
+        background-color: #000000;
+        color: #FFFFFF;
+    }
+    .btn-upper:hover {
+        border-color: #FFCC00;
+        background-color: #FFCC00;
+        color: #000000;
+    }
+    .btn-below {
+        margin-right: 20px;
+        border-color: #FFFFFF;
+        background-color: #FFFFFF;
+        color: #000000;
+    }
+    .btn-below:hover {
+        border-color: #FFCC00;
+        background-color: #FFCC00;
+        color: #000000;
+    }
+
+    /* To configure common the "Network status of stair switch" function */
+    #statusNetwork-title {
+        margin-top: 10px;
+        height: 40px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .statusNetwork {
+        font-size: 1.4rem;
+        font-weight: 550;
+        color: #FFD700;
+        margin-left: 5px;
+        margin-right: 10px;
+    }
+    /* .connect-status {
+        position: relative;
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    } */
+    .switch-status {
+        display: flex;
+        align-items: center;
+    }
+    .upper-status-text {
+        color: #000000;
+        font-size: .85rem;
+        padding: 0.5rem, 0.5rem;
+        height: 40px;
+        width: 80px;
+        margin-left: 85px;
+        margin-right: 10px;
+        margin-top: 12px;
+        background-color: #FFFFFF;
+        background-size: solid;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #upper-ledconnect{
+        margin-top: 10px;
+        margin-right: 30px;
+        width: 15px;
+        height: 15px;
+        border: solid 1px #00FF00;
+        background-color: #00FF00;
+        border-radius: 50%;
+    }
+    .below-status-text {
+        color: #FFFFFF;
+        font-size: .85rem;
+        padding: 0.5rem, 0.5rem;
+        height: 40px;
+        width: 80px;
+        margin-left: 20px;
+        margin-right: 10px;
+        margin-top: 12px;
+        background-color: #000000;
+        background-size: solid;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #below-ledconnect{
+        margin-top: 10px;
+        margin-right: 30px;
+        width: 15px;
+        height: 15px;
+        border: solid 1px #00FF00;
+        background-color: #00FF00;
+        border-radius: 50%;
+    }
+
+    /*----- To configure the "Environmental sensor" function -----*/
+    /* To configure common the "Environmental sensor" function */
+    #sensor {
+        width: 400px;
+        height: 440px;
+        background: none;
+        border: 2px solid rgba(255, 255, 255, 0.8);
+        box-shadow: 0 0 10px 2px rgb(255, 255, 255, 0.8);
+        color: #fff;
+        border-radius: 20px;
+    }
+
+    /* To configure the "title" class */
+    .title {
+        position: relative;
+        top: 15px;
+        color: #FFFFCC; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* To configure the "sensor-icon, sensor-text, sensor-value, unit" class */
+    .sensor-icon {
+        width: 50px;
+        height: 50px
+    }
+    .sensor-text {
+        font-size: 1.4rem;
+        font-weight: 2000;
+        color: #FFFFFF;
+        margin-left: 5px;
+        margin-right: 10px;
+    }
+    .sensor-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #FFFF00;
+    }
+    .unit {
+        margin-bottom: 12px;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #FFFFCC;
+    }
+
+    /* To configure the "temp" id */
+    #temp {
+        margin-top: 100px;
+        margin-left: 30px;
+        height: 50px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    /* To configure the "hum" id */
+    #hum {
+        margin-top: 20px;
+        margin-left: 30px;
+        height: 50px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    /* To configure the "light-sensor" id */
+    #light-sensor {
+        margin-top: 20px;
+        margin-left: 30px;
+        height: 50px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+    .light-unit {
+        margin-top: 10px;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #FFFFCC; 
+    }
+
+    /*----- To configure the "Stair switch" function -----*/
+    /* To configure common the "Stair switch" function */
+    #switch {
+        width: 400px;
+        height: 470px;
+        background: none;
+        border: 2px solid rgba(255, 255, 255, 0.8);
+        box-shadow: 0 0 10px 2px rgb(255, 255, 255, 0.8);
+        color: #fff;
+        border-radius: 20px;
+    }
+
+    /* To configure the "mode-title" id */
+    #mode-title {
+        margin-top: 40px;
+        margin-left: 15px;
+        height: 40px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    /* To configure the "btn-control-mode" class */
+    .btn-control-mode {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .btn-mode {
+        height: 40px;
+        width: 80px;
+        border-radius: 20px;
+        border-style: solid;
+    }
+    .btn-auto {
+        margin-right: 20px;
+        border-color: #FF0000;
+        background-color: #FF0000;
+        color: #FFFFFF;
+    }
+    .btn-auto:hover {
+        border-color: #FFCC00;
+        background-color: #FFCC00;
+        color: #000000;
+    }
+    .btn-manual {
+        border-color: #FFFFFF;
+        background-color: #FFFFFF;
+        color: #000000;
+    }
+    .btn-manual:hover {
+        border-color: #FFCC00;
+        background-color: #FFCC00;
+        color: #000000;
+    }
+
+    /* To configure the "upper-title" id */
+    #upper-title {
+        margin-top: 10px;
+        margin-left: 15px;
+        height: 40px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+    .switch-icon {
+        width: 40px;
+        height: 40px;
+    }
+    .control-title {
+        font-size: 1.4rem;
+        font-weight: 2000;
+        color: #FFFFFF;
+        margin-left: 5px;
+        margin-right: 10px;
+    }
+
+    /* To configure the "btn-switch" class */
+    .btn-switch {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .btn-light {
+        height: 40px;
+        width: 80px;
+        border-radius: 20px;
+        border-style: solid;
+    }
+    .btn-on {
+        margin-right: 20px;
+        border-color: #FF0000;
+        background-color: #FF0000;
+        color: #FFFFFF;
+    }
+    .btn-on:hover {
+        border-color: #FFCC00;
+        background-color: #FFCC00;
+        color: #000000;
+    }
+    .btn-off {
+        border-color: #FFFFFF;
+        background-color: #FFFFFF;
+        color: #000000;
+    }
+    .btn-off:hover {
+        border-color: #FFCC00;
+        background-color: #FFCC00;
+        color: #000000;
+    }
+
+    /* To configure the "below-title" id */
+    #below-title {
+        margin-top: 10px;
+        margin-left: 15px;
+        height: 40px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    /* To configure the "status-title" id */
+    #status-title {
+        /* position: relative;
+        margin-top: 10px;
+        margin-left: 15px;
+        height: 40px;
+        width: 100%;
+        display: flex;
+        align-items: center; */
+        margin-top: 20px;
+        height: 40px;
+        width: 100%;
+        display: flex;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .status-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #FFD700;
+        margin-left: 5px;
+        margin-right: 10px;
+    }
+    /* #motion-title {
+        position: relative;
+        margin-top: 20px;
+        height: 40px;
+        width: 100%;
+        display: flex;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    } */
+    /* .motion-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #FFD700;
+        margin-left: 5px;
+        margin-right: 10px;
+    } */
+</style>
+
+    <!-------------------------------- To create body for WebServer -------------------------------->
+<body>
+        <!---------------------------- To create the control bar ----------------------------->
+    <div class="sidebar">
+            <!-- To create the "Logo" part -->
+        <div class="logo">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6-MC-jKUe3ihEJE2pRTX7oArIJEmHFcGejA&s" alt="" class="logo-icon">
+            <span class="logo-text">SMART HOME</span>
+        </div>
+            <!-- To create the "Admin" part -->
+        <div class="user">
+            <img src="https://scontent.fhan5-5.fna.fbcdn.net/v/t39.30808-6/289669730_2273006469533472_1453381892919987575_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeE1SabQGHbGZdriKak5r-DXBFYmW_xIYVkEViZb_EhhWdSSG-Ra-Y16Ei-Z3EwoTySaUl2D0_kf1mYTI77jihQ5&_nc_ohc=i8aSQXCvpxwQ7kNvgH-zDKb&_nc_ht=scontent.fhan5-5.fna&oh=00_AYC9n6eBfUpklL0NLrAy83S_4orXwUNcdRsNp4Y2uGDCdg&oe=669DC242" alt="" class="user-img">
+            <div class="user-text">
+                <p>TRAN DOAN MANH</p>
+                <p>Admin</p>
+            </div>
+        </div>
+            <!-- To create the "Control" part -->
+        <ul>
+                <!-- Information about project -->
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-circle-info btn-icon"></i>
+                    <button class="conversion" onclick="Information()">Project Information</button>
+                </a>
+            </li>
+                <!-- Zigbee network operations -->
+            <li>
+                <a href="#">
+                    <i type="solid" class="bx bxs-network-chart btn-icon"></i>
+                    <button class="conversion" onclick="Network()">Zigbee Network</button>
+                </a>
+            </li>
+                <!-- Get the sensor value -->
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-temperature-low btn-icon"></i>
+                    <button class="conversion" onclick="Sensor()">Environmental Sensor</button>
+                </a>
+            </li>
+                <!-- Stair Switch -->
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-toggle-off btn-icon"></i>
+                    <button class="conversion" onclick="Switch()">Stair Switch</button>
+                </a>
+            </li>
+                <!-- Log out of WebControl -->
+            <li>
+                <a href="#" class="logout">
+                    <i class="bx bx-log-out-circle logout-icon"></i>
+                    <button class="conversion logout-text" onclick="Logout()">Logout</button>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+        <!---------------------------- To create the details of control function ----------------------------------->
+    <div class="control_interface">
+            <!------------------------ Information ------------------------->
+        <div id="information" style="display: none">
+            <h1 class="inf">STAIR SWITCH PROJECT</h1>
+        </div>
+
+            <!----------------------- The function of Zigbee network ------------------------>
+        <div id="network" style="display: none">
+            <h1 class="title">Zigbee Network</h1>
+                <!-- Create the Zigbee network -->
+            <div id="create-title">
+                <img src="https://cdn-icons-png.flaticon.com/128/2103/2103658.png" alt="" class="switch-icon">
+                <span class="control-title">Create the Zigbee network:</span>
+                <button class="btn-network stop-openning" onclick="CreateNetwork()">CREATE</button>
+            </div>
+                <!-- Open the Zigbee network -->
+            <div id="open-title">
+                <img src="https://cdn-icons-png.flaticon.com/128/578/578196.png" alt="" class="switch-icon">
+                <span class="control-title">Open the network:</span>
+                <button class="btn-network stop-openning" onclick="OpenNetwork()">OPEN</button>
+            </div>
+                <!-- Stop openning the network -->
+            <div id="stop-title">
+                <img src="https://cdn-icons-png.flaticon.com/128/12946/12946196.png" alt="" class="switch-icon">
+                <span class="control-title">Stop joining the network:</span>
+                <button class="btn-network stop-openning" onclick="StopOpeningNetwork()">STOP</button>
+            </div>
+                <!-- Leave the Zigbee network -->
+            <div id="clear-title">
+                <img src="https://cdn-icons-png.flaticon.com/128/7448/7448016.png" alt="" class="switch-icon">
+                <span class="control-title">Leave the Zigbee network</span>
+            </div>
+            <div class="btn-switch">
+                <button class="btn-network btn-all" onclick="AllSW_LeaveNetwork()">ALL</button>
+                <button class="btn-network btn-upper" onclick="UpperSW_LeaveNetwork()">UPPER</button>
+                <button class="btn-network btn-below" onclick="BelowSW_LeaveNetwork()">BELOW</button>
+            </div>
+                <!-- Network status of stair switch -->
+            <div id="statusNetwork-title">
+                <img src="https://cdn-icons-png.flaticon.com/128/3519/3519595.png" alt="" class="switch-icon">
+                <span class="statusNetwork">Network status of stair switch</span>
+            </div>
+            <div class="switch-status">
+                <span class="upper-status-text">UPPER</span> 
+                <input id="upper-ledconnect" type="button"/>
+                <span class="below-status-text">BELOW</span>
+                <input id="below-ledconnect" type="button"/>
+            </div>
+        </div>
+
+            <!----------------------- The function of getting the sensor value ------------------------>
+        <div id="sensor" style="display: none">
+            <h1 class="title">Environmental Sensor</h1>
+                <!-- Get the temperature value -->
+            <div id="temp">
+                <img src="https://cdn-icons-png.flaticon.com/128/6218/6218295.png" alt="" class="sensor-icon">
+                <span class="sensor-text">Temperature: </span> 
+                <span id="temperature" class="sensor-value"></span>
+                <span class="unit">&deg;C</span>
+            </div>
+                <!-- Get the humidity value -->
+            <div id="hum">
+                <img src="https://cdn-icons-png.flaticon.com/128/9643/9643795.png" alt="" class="sensor-icon">
+                <span class="sensor-text">Humidity: </span> 
+                <span id="humidity" class="sensor-value"></span>
+                <span class="unit">&percnt;</span>
+            </div>
+                <!-- Get the brightness value -->
+            <div id="light-sensor">
+                <img src="https://cdn-icons-png.flaticon.com/128/15187/15187025.png" alt="" class="sensor-icon">
+                <span class="sensor-text">Brightness: </span> 
+                <span id="light" class="sensor-value"></span>
+                <span class="light-unit">lux</span>
+            </div>
+        </div>
+
+            <!----------------------- The function of controling the stair light ------------------------>
+        <div id="switch" style="display: none">
+            <h1 class="title">Stair Switch</h1>
+                <!-- Select the control mode -->
+            <div id="mode-title">
+                <img src="https://cdn-icons-png.flaticon.com/128/3653/3653276.png" alt="" class="switch-icon">
+                <span class="control-title">Control mode:</span>
+                <span id="mode-display" class="mode-display"></span> 
+            </div>
+            <div class="btn-control-mode">
+                <button class="btn-mode btn-auto" onclick="AutoMode()">AUTO</button>
+                <button class="btn-mode btn-manual" onclick="ManualMode()">MANUAL</button>
+            </div>
+                <!-- Turn on/off the stair light using the upper stair switch -->
+            <div id="upper-title">
+                <img src="https://cdn-icons-png.flaticon.com/128/7446/7446049.png" alt="" class="switch-icon">
+                <span class="control-title">Upper stair switch</span>
+            </div>
+            <div class="btn-switch">
+                <button class="btn-light btn-on" onclick="UpperSW_TurnOn()">ON</button>
+                <button class="btn-light btn-off" onclick="UpperSW_TurnOff()">OFF</button>
+            </div>
+                <!-- Turn on/off the stair light using the below stair switch -->
+            <div id="below-title">
+                <img src="https://cdn-icons-png.flaticon.com/128/7446/7446049.png" alt="" class="switch-icon">
+                <span class="control-title">Below stair switch</span>
+            </div>
+            <div class="btn-switch">
+                <button class="btn-light btn-on" onclick="BelowSW_TurnOn()">ON</button>
+                <button class="btn-light btn-off" onclick="BelowSW_TurnOff()">OFF</button>
+            </div>
+                <!-- The status of stair light -->
+            <div id="status-title">
+                <img src="https://cdn-icons-png.flaticon.com/128/702/702710.png" alt="" class="switch-icon">
+                <span class="status-title">Stair light status: </span>
+                <span id="light-status" class="light-status"></span>
+            </div>
+                <!-- Motion sensor -->
+            <!-- <div id="motion-title">
+                <img src="https://cdn-icons-png.flaticon.com/128/9134/9134511.png" alt="" class="switch-icon">
+                <span class="motion-title">Motion state: </span>
+                <span id="light-status" class="light-status"><img src="https://cdn-icons-png.flaticon.com/128/9416/9416128.png" alt="" class="switch-icon"></span>
+                <span id="light-status" class="light-status"><img src="https://cdn-icons-png.flaticon.com/128/10036/10036351.png" alt="" class="switch-icon"></span>
+            </div> -->
+        </div>
+    </div>
+</body>
+
+    <!-------------------------------- To create javascript for WebServer -------------------------------->
+<script>
+        /********************************** All VARIABLES to use the Javacript functions **********************************/
+
+        // Variable to create "XMLHttpRequest" object to send HTTP request (GET, POST, PUT, DELETE,...) to server
+    var xhttp_logout = new XMLHttpRequest(); 
+    var xhttp_sensorDataUpdate = new XMLHttpRequest();
+    var xhttp_ModeAndStatusUpdate = new XMLHttpRequest();
+    var xhttp_control = new XMLHttpRequest(); 
+    var status_NetworkUp = 1; 
+    var status_NetworkDown = 1;     
+
+        /********************************** All Javacript FUNCTIONS **********************************/ 
+
+        /* --------------- Javacript functions about displaying one of four control features --------------*/ 
+        // To only display the function "Project information" 
+    function Information() {
+        document.getElementById("information").style.display = "block";
+        document.getElementById("network").style.display = "none";
+        document.getElementById("sensor").style.display = "none";
+        document.getElementById("switch").style.display = "none";
+    }
+        // To only display the function "Zigbee Network" 
+    function Network() {
+        document.getElementById("information").style.display = "none";
+        document.getElementById("network").style.display = "block";
+        document.getElementById("sensor").style.display = "none";
+        document.getElementById("switch").style.display = "none";
+    }
+        // To only display the function "Environmental Sensor" 
+    function Sensor() {
+        document.getElementById("information").style.display = "none";
+        document.getElementById("network").style.display = "none";
+        document.getElementById("sensor").style.display = "block";
+        document.getElementById("switch").style.display = "none";
+    }
+        // To only display the function "Stair Switch"
+    function Switch() {
+        document.getElementById("information").style.display = "none";
+        document.getElementById("network").style.display = "none";
+        document.getElementById("sensor").style.display = "none";
+        document.getElementById("switch").style.display = "block";
+    }
+    
+        /* --------------- Javacript functions about control features --------------*/ 
+        // To create the Zigbee network
+    function CreateNetwork() {
+        xhttp_control.open("POST", "/createNetwork", true);
+        xhttp_control.send("CREATE");
+    }
+        // To open the network
+    function OpenNetwork() {
+        xhttp_control.open("POST", "/openNetwork", true);
+        xhttp_control.send("OPEN");
+    }
+        // To stop openning the network
+    function StopOpeningNetwork() {
+        xhttp_control.open("POST", "/stopOpenningNetwork", true);
+        xhttp_control.send("STOP");
+    }
+        // To leave the network
+    function AllSW_LeaveNetwork() {
+        xhttp_control.open("POST", "/allSW_LeaveNetwork", true);
+        xhttp_control.send("ALL");
+    }
+    function UpperSW_LeaveNetwork() {
+        xhttp_control.open("POST", "/upperSW_LeaveNetwork", true);
+        xhttp_control.send("UPPER");
+    }
+    function BelowSW_LeaveNetwork() {
+        xhttp_control.open("POST", "/belowSW_LeaveNetwork", true);
+        xhttp_control.send("BELOW");
+    }
+        // To select the control mode
+    function AutoMode() {
+        xhttp_control.open("POST", "/autoMode", true);
+        xhttp_control.send("AUTO");
+    }
+    function ManualMode() {
+        xhttp_control.open("POST", "/manualMode", true);
+        xhttp_control.send("MANUAL");
+    }
+        // To on/off the stair light
+    function UpperSW_TurnOn() {
+        xhttp_control.open("POST", "/upperSW_TurnOn", true);
+        xhttp_control.send("ONUP");
+    }
+    function UpperSW_TurnOff() {
+        xhttp_control.open("POST", "/upperSW_TurnOff", true);
+        xhttp_control.send("OFFUP");
+    }
+    function BelowSW_TurnOn() {
+        xhttp_control.open("POST", "/belowSW_TurnOn", true);
+        xhttp_control.send("ONDOWN");
+    }
+    function BelowSW_TurnOff() {
+        xhttp_control.open("POST", "/belowSW_TurnOff", true);
+        xhttp_control.send("OFFDOWN");
+    }
+
+    /* --------------- Javacript functions about updating data --------------*/ 
+        // To get the sensor value every 30 second
+    setInterval(function() {
+        xhttp_sensorDataUpdate.open("GET", "/get_sensordata", true);
+        xhttp_sensorDataUpdate.onreadystatechange = getDataSensor_display;
+        xhttp_sensorDataUpdate.send();
+        }, 30000);
+        // Get the sensor data and display on Web
+    function getDataSensor_display() {
+        if(xhttp_sensorDataUpdate.readyState == 4 && xhttp_sensorDataUpdate.status == 200) {
+                // Get the sensor data that ESP32 sends to WebServer
+            const sensor_data = xhttp_sensorDataUpdate.responseText;
+                // Convert the received sensor data into JSON string
+            const sensor_data_JSON = JSON.parse(xhttp_sensorDataUpdate.responseText);
+                // Get the received sensor data in JSON string to update on WebServer
+            document.getElementById('temperature').innerHTML = sensor_data_JSON.temperature;
+            document.getElementById('humidity').innerHTML = sensor_data_JSON.humidity;
+            document.getElementById('light').innerHTML = sensor_data_JSON.light;
+        }
+    }
+
+        // To get the mode and status data every 1 second
+    setInterval(function() {
+        xhttp_ModeAndStatusUpdate.open("GET", "/get_modeAndStatusData", true);
+        xhttp_ModeAndStatusUpdate.onreadystatechange = getModeAndStatusData_display;
+        xhttp_ModeAndStatusUpdate.send();
+        }, 1000);
+        // Get the the status of stair light and display on Web
+    function getModeAndStatusData_display() {
+        if(xhttp_ModeAndStatusUpdate.readyState == 4 && xhttp_ModeAndStatusUpdate.status == 200) {
+                // Get the mode and status data that ESP32 sends to WebServer
+            const modeAndstatus = xhttp_ModeAndStatusUpdate.responseText;
+                // Convert that received data into JSON string
+            const modeAndstatus_JSON = JSON.parse(xhttp_ModeAndStatusUpdate.responseText);
+                // Get the status of stair light to update on WebServer
+            if(modeAndstatus_JSON.statusLight == 255)
+            {
+                document.getElementById('light-status').innerHTML = '<img src="https://cdn-icons-png.flaticon.com/128/16185/16185844.png" alt="" class="switch-icon">';
+            }
+            else if(modeAndstatus_JSON.statusLight == 0)
+            {
+                document.getElementById('light-status').innerHTML = '<img src="https://cdn-icons-png.flaticon.com/128/9573/9573568.png" alt="" class="switch-icon">';
+            }
+                // Get the control mode to update on WebServer
+            if(modeAndstatus_JSON.controlMode == 255)
+            {
+                document.getElementById('mode-display').innerHTML = '<img src="https://cdn-icons-png.flaticon.com/128/189/189386.png" alt="" class="switch-icon">';
+            }
+            else if(modeAndstatus_JSON.controlMode == 0)
+            {
+                document.getElementById('mode-display').innerHTML = '<img src="https://cdn-icons-png.flaticon.com/128/3586/3586512.png" alt="" class="switch-icon">';
+            }
+                // Get the network status of upperSW to update on WebServer
+            if(modeAndstatus_JSON.statusNetworkUp == 255)
+            {
+                if(status_NetworkUp == 1)
+                {
+                    status_NetworkUp = 0;
+                    document.getElementById('upper-ledconnect').style.borderColor = "#00FF00";
+                    document.getElementById('upper-ledconnect').style.backgroundColor = "#00FF00";
+                }
+                else if(status_NetworkUp == 0)
+                {
+                    status_NetworkUp = 1;
+                    document.getElementById('upper-ledconnect').style.borderColor = "#FFFFFF";
+                    document.getElementById('upper-ledconnect').style.backgroundColor = "#FFFFFF";
+                }
+            }
+            else if(modeAndstatus_JSON.statusNetworkUp == 0)
+            {
+                if(status_NetworkUp == 1)
+                {
+                    status_NetworkUp = 0;
+                    document.getElementById('upper-ledconnect').style.borderColor = "#FF0000";
+                    document.getElementById('upper-ledconnect').style.backgroundColor = "#FF0000";
+                }
+                else if(status_NetworkUp == 0)
+                {
+                    status_NetworkUp = 1;
+                    document.getElementById('upper-ledconnect').style.borderColor = "#FFFFFF";
+                    document.getElementById('upper-ledconnect').style.backgroundColor = "#FFFFFF";
+                }
+            }
+                // Get the network status of belowSW to update on WebServer
+            if(modeAndstatus_JSON.statusNetworkDown == 255)
+            {
+                if(status_NetworkDown == 1)
+                {
+                    status_NetworkDown = 0;
+                    document.getElementById('below-ledconnect').style.borderColor = "#00FF00";
+                    document.getElementById('below-ledconnect').style.backgroundColor = "#00FF00";
+                }
+                else if(status_NetworkDown == 0)
+                {
+                    status_NetworkDown = 1;
+                    document.getElementById('below-ledconnect').style.borderColor = "#FFFFFF";
+                    document.getElementById('below-ledconnect').style.backgroundColor = "#FFFFFF";
+                }
+            }
+            else if(modeAndstatus_JSON.statusNetworkDown == 0)
+            {
+                if(status_NetworkDown == 1)
+                {
+                    status_NetworkDown = 0;
+                    document.getElementById('below-ledconnect').style.borderColor = "#FF0000";
+                    document.getElementById('below-ledconnect').style.backgroundColor = "#FF0000";
+                }
+                else if(status_NetworkDown == 0)
+                {
+                    status_NetworkDown = 1;
+                    document.getElementById('below-ledconnect').style.borderColor = "#FFFFFF";
+                    document.getElementById('below-ledconnect').style.backgroundColor = "#FFFFFF";
+                }
+            }
+        }
+    }
+</script>
+</html>
