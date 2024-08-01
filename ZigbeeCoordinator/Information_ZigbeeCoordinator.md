@@ -1,0 +1,2 @@
+# Information about the device "Zigbee Coordinator"
+**Zigbee Coordinator** ***(ZC)*** là thiết bị đóng vai trò quản lý tất cả các thiết bị tồn tại trong mạng Zigbee, cho phép thiết bị gia nhập mạng, rời mạng, quản lý trạng thái từng thiết bị và phân phối bản tin giao tiếp giữa WebLocal và các thiết bị trong mạng Zigbee. 
