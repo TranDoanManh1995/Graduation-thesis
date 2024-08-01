@@ -1,0 +1,2 @@
+# Information about the device "Upper Stair Switch"
+**Upper Switch** ***(Zigbee Router)*** là thiết bị công tắc cầu thang được quản lý bởi thiết bị Zigbee Coordinator sử dụng để điều khiển đèn cầu thang với 3 chế độ điều khiển đồng bộ kết hợp với Below Switch: *Điều khiển bằng nút bấm cơ, Điều khiển sử dụng cảm biến PIR và Điều khiển trên WebLocal.*

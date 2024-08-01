@@ -1,0 +1,2 @@
+# Information about the device "Below Stair Switch"
+**Below Switch** ***(Zigbee Router)*** là thiết bị công tắc cầu thang được quản lý bởi thiết bị Zigbee Coordinator sử dụng để điều khiển đèn cầu thang với 3 chế độ điều khiển đồng bộ kết hợp với Upper Switch: *Điều khiển bằng nút bấm cơ, Điều khiển sử dụng cảm biến PIR và Điều khiển trên WebLocal*. **Ngoài ra**, để làm quen với WebLocal, trên thiết bị Below Switch, tôi sử dụng thêm tính năng thu thập thông số môi trường để hiển thị trên WebLocal.
